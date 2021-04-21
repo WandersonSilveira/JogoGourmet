@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Controller.JogoGourmetController;
+import Controller.AlimentoController;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -22,42 +22,38 @@ import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class JogoGourmetView extends JFrame {
-
+	
 	private JPanel principalPane;
-	Integer resposta = 0; /*0 - Pergunta | 1 - Acerto | 2 - Cadastro novo*/
-
+	Integer resposta = 0; 
 	
 	private void exibeTela() {
 		
 		/*Tela de perguntas*/
-		 if(JogoGourmetController.validaResposta(resposta) == 0) {
+		do {
 			 
 			 Object[] options = { "Yes", "No" };
 			 
 			 resposta = JOptionPane.showOptionDialog(
-						null, "A comida que você pensou é " + JogoGourmetController.gerarPergunta() +
+						null, "A comida que você pensou é " + AlimentoController.gerarPergunta() +
 						" ?","Jogo Gourmet", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
 						null, options, options[0]
 						);
-								
-			 /*Chama tela de perguntas até haver uma conclusão*/	
-			 exibeTela();
-				
-		 }
+			 
+		}while(AlimentoController.validaResposta(resposta) == 0);
+		
 		 /*Tela de acerto*/				 
-		 else if(JogoGourmetController.validaResposta(resposta) == 1) {
+		 if(AlimentoController.validaResposta(resposta) == 1) {
 			 JOptionPane.showMessageDialog(null, "Acertei de novo!");
-			 JogoGourmetController.recomecaJogo(true);
+			 AlimentoController.recomecaJogo();
 		 }
 		 /*Tela de cadastro*/
-		 else if(JogoGourmetController.validaResposta(resposta) == 2) {
+		 else if(AlimentoController.validaResposta(resposta) == 2) {
 				 String nomeComida = JOptionPane.showInputDialog("Qual prato você pensou?");
 				 String tipoComida = JOptionPane.showInputDialog(nomeComida +" é _______ e "+
-				 JogoGourmetController.retornaUltimoNomeAlimento()+" não é:");
+				 AlimentoController.retornaNomeUltimoAlimento()+" não é:");
 					
-			 JogoGourmetController.adicionarAlimentoNovo(tipoComida, nomeComida);
-			 
-			 JogoGourmetController.recomecaJogo(false);
+			 AlimentoController.adicionarAlimentoNovo(tipoComida, nomeComida);
+			 AlimentoController.recomecaJogo();
 		 }
 	}
 
@@ -69,7 +65,7 @@ public class JogoGourmetView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JogoGourmetController.perguntasIniciais();
+					AlimentoController.perguntasIniciais();
 					JogoGourmetView frame = new JogoGourmetView();
 					frame.setVisible(true);
 				} catch (Exception e) {
