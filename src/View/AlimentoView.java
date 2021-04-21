@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
-public class JogoGourmetView extends JFrame {
+public class AlimentoView extends JFrame {
 	
 	private JPanel principalPane;
 	Integer resposta = 0; 
@@ -66,7 +66,7 @@ public class JogoGourmetView extends JFrame {
 			public void run() {
 				try {
 					AlimentoController.perguntasIniciais();
-					JogoGourmetView frame = new JogoGourmetView();
+					AlimentoView frame = new AlimentoView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -78,7 +78,7 @@ public class JogoGourmetView extends JFrame {
 	/**
 	 * Criação do frame
 	 */
-	public JogoGourmetView() {
+	public AlimentoView() {
 		/*Painel*/
 		setTitle("Jogo Gourmet");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
